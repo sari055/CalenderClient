@@ -1,0 +1,6 @@
+{
+    "marquee.widgets.npm-stats.packageNames": [
+        "my-app"
+    ],
+    "compile-hero.disable-compile-files-on-did-save-code": true
+}
