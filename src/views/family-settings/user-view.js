@@ -18,6 +18,11 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Header from "../../components/header";
+import { useNavigate, Link as RouterLink, Link } from 'react-router-dom';
+import AddParent from './add-user'
+import TextField from '@mui/material/TextField';
+import Form from "../../components/form";
+import { Button } from "@mui/material";
 // import StyledHeader from "../../components/header";
 
 // const Item = styled(Paper)(({ theme }) => ({
@@ -41,7 +46,14 @@ import Header from "../../components/header";
 // }));
 
 const UserView = ({ user, users }) => {
+    const handleButtonClick = () => {
+        // Call the AddParent component logic here
+        console.log('Button clicked'); // Just for demonstration
+        AddParent(); // Activate the AddParent component
+    }
 
+
+    
     const emptyUser = {firstName: 'אין', lastName: 'מידע'}
     const [imgUrl, setImgUrl] = useState();
     const [father, setFathar] = useState(emptyUser);
@@ -68,7 +80,7 @@ const UserView = ({ user, users }) => {
 
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12}>
+        <Grid item xs={12}>
                 {/* <Header title={"פרטי צאצא"}/> */}
             </Grid>
             <Grid item xs={8}>
@@ -117,18 +129,28 @@ const UserView = ({ user, users }) => {
                         <Chip label="עדכון פרטים" size="large" />
                     </Divider>
                     <CardActions sx={{ justifyContent: 'center' }}>
-                        <Fab color="primary" variant="extended" size="large" sx={{ borderRadius: '50%', width: '80px', height: '80px', mr: 2 }}>
+              
+                  <Link component={RouterLink} to="/add-user">
+                         <Fab   color="primary" variant="extended" size="large" sx={{ borderRadius: '50%', width: '80px', height: '80px', mr: 2 }}>
                             <GroupAddIcon sx={{ mr: 1 }} />
-                            הוספת הורה
+                            הוספת בן משפחה
                         </Fab>
-                        <Fab disabled color="primary" variant="extended" size="large" sx={{ borderRadius: '50%', width: '80px', height: '80px', mr: 2 }}>
+                  </Link>
+                
+
+{/* 
+                        <Fab  color="primary" variant="extended" size="large" sx={{ borderRadius: '50%', width: '80px', height: '80px', mr: 2 }}>
                             <FaceRetouchingNaturalIcon sx={{ mr: 1 }} />
                             הוספת ילד/ה
                         </Fab>
-                        <Fab disabled color="primary" variant="extended" size="large" sx={{ borderRadius: '50%', width: '80px', height: '80px' }}>
+                        <Fab  color="primary" variant="extended" size="large" sx={{ borderRadius: '50%', width: '80px', height: '80px' }}>
                             <WcIcon sx={{ mr: 1 }} />
                             הוספת בן זוג
-                        </Fab>
+                        </Fab> */}
+                        <Link component={RouterLink} to="/add-event">
+                  <Button variant="contained" disableElevation>
+          הוספת ארוע               </Button>
+                 </Link>
                     </CardActions>
                 </Grid>
             </Grid>
@@ -138,6 +160,7 @@ const UserView = ({ user, users }) => {
                 </Grid>
             </Grid>
         </Grid>
+        
     )
 }
 export default UserView;
