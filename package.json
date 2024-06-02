@@ -12,6 +12,7 @@
     "@mui/icons-material": "^5.15.12",
     "@mui/material": "^5.15.13",
     "@mui/styled-engine-sc": "^6.0.0-alpha.17",
+    "@mui/x-date-pickers": "^7.6.1",
     "@mui/x-tree-view": "^6.17.0",
     "@react-spring/web": "^9.7.3",
     "@reduxjs/toolkit": "^2.2.3",
