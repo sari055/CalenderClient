@@ -41,7 +41,29 @@ const handleDateChange =(e) =>{
     return (
       
         <Form  icon={<EventIcon />} >
-          
+              <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="eventOwnerName"
+          label="שם בעל הארוע"
+          name="eventOwnerName"
+          autoComplete="eventOwnerName"
+          autoFocus
+          inputProps={{
+            pattern: "[A-Za-z ]+",
+          }}
+        /> 
+            <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="tzOwnerName"
+          label="תז בעל הארוע"
+          name="eventOwnerName"
+          autoComplete="tzOwnerName"
+          autoFocus
+        /> 
          <Box sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">סוג ארוע</InputLabel>
@@ -84,7 +106,11 @@ const handleDateChange =(e) =>{
       <DemoContainer components={['DatePicker']}>
         <DatePicker 
         label="תאריך ארוע" 
+        fullWidth
         value={eventDate}
+        id="date"
+        name="date"
+        autoComplete="date"
         onChange={handleDateChange}
         />
       </DemoContainer>

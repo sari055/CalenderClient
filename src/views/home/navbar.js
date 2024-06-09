@@ -117,9 +117,11 @@ function Navbar() {
   const dispatch = useDispatch();
 
   const pages = [
-    { name: "manage-calendar", text: 'לוח שנה', link: "/home/calendar" },
-    { name: "manage-family", text: 'ניהול צאצאים', link: "/home/family/settings" },
+    { name: "calendar", text: 'לוח שנה', link: "/home/calendar" },
+    { name: "manage-family", text: 'ניהול צאצאים ', link: "/home/family/settings" },
+    {name: "manage-calendar",text:'ניהול לוח',link:"/home/calendar-manage"},
     { name: "about", text: 'אודות', link: "/home/about" }
+    
   ];
   
   const settings = [

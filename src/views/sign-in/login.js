@@ -21,8 +21,8 @@ export default function Login() {
     event.preventDefault();
 
     const data = new FormData(event.target)
-    const { email, password } = Object.fromEntries(data.entries())
-    dispatch(login(email, password));
+    const { tz, password } = Object.fromEntries(data.entries())
+    dispatch(login(tz, password));
   };
 
   return (
@@ -32,10 +32,10 @@ export default function Login() {
           margin="normal"
           required
           fullWidth
-          id="email"
+          id="tz"
           label="שם משתמש"
-          name="email"
-          autoComplete="email"
+          name="tz"
+          autoComplete="tz"
           autoFocus
         />
         <TextField
