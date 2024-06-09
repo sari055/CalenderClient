@@ -3,6 +3,7 @@ import { SET_CURRENT_USER, REGISTER_SUCCESS, LOGOUT, SET_ERRORS } from '../types
 import { enqueueSnackbar } from 'notistack';
 import { HttpStatusCode } from 'axios';
 import router from '../../router';
+import { getCurrentUserByTz } from './user-action';
 
 export function setCurrentUser(user) {
   return {
@@ -26,14 +27,15 @@ export function logoutUser() {
 /**
  * Login user action
  */
-export const login = (email, password) => async dispatch => {
+export const login = (tz, password) => async dispatch => {
 
   try {
-    const response = await AuthService.login(email, password);
+    const response = await AuthService.login(tz, password);
     if (response.data) {
       const { siteUser, token } = response.data;
       dispatch(setCurrentUser(siteUser))
       AuthService.saveToken(token);
+      dispatch(getCurrentUserByTz(tz))
       router.navigate('/home');
     }
   }
@@ -51,7 +53,7 @@ export const getAuthorizedUser = () => async dispatch => {
     else {
       dispatch(logout);
     }
-  } 
+  }
   catch (error) {
     dispatch(logout);
   }
@@ -72,6 +74,7 @@ export const logout = () => dispatch => {
  */
 export const register = (data) => async dispatch => {
   try {
+    debugger;
     const response = await AuthService.register(data);
     if (response?.status == HttpStatusCode.Ok) {
       dispatch(registerSuccess())

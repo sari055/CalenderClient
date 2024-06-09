@@ -1,8 +1,9 @@
-import { LOGOUT, SET_CURRENT_USER } from "../types/user-types";
+import { GET_CURRENT_USER, LOGOUT, SET_CURRENT_USER } from "../types/user-types";
 
 const initialState = {
   user: undefined,
-  isAuthenticated: false
+  isAuthenticated: false,
+  currentUser: undefined
 }
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -10,6 +11,10 @@ const userReducer = (state = initialState, action) => {
       return {
         isAuthenticated: true,
         user: action.payload
+      };
+      case GET_CURRENT_USER:
+      return {
+        ...state, currentUser: action.payload
       };
     case LOGOUT:
       return {
