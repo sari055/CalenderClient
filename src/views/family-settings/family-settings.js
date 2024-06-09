@@ -13,6 +13,7 @@ const FamilySettings = () => {
 
     useEffect(() => {
         setActiveCalendar(calendars?.find(cal => cal.active));
+        console.log("calendar: ",calendars);
     }, [calendars])
 
     useEffect(() => {
@@ -29,6 +30,7 @@ const FamilySettings = () => {
         debugger
         if (users && users.length > 0) {
             setCurrentUser(users.find(u => u.siteUserId === siteUser.user.id))
+            console.log("users: ",users);
         }
     }, [users, siteUser])
 

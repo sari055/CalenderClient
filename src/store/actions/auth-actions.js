@@ -26,10 +26,10 @@ export function logoutUser() {
 /**
  * Login user action
  */
-export const login = (email, password) => async dispatch => {
+export const login = (tz, password) => async dispatch => {
 
   try {
-    const response = await AuthService.login(email, password);
+    const response = await AuthService.login(tz, password);
     if (response.data) {
       const { siteUser, token } = response.data;
       dispatch(setCurrentUser(siteUser))
@@ -73,7 +73,7 @@ export const logout = () => dispatch => {
 export const register = (data) => async dispatch => {
   try {
     const response = await AuthService.register(data);
-    if (response?.status == HttpStatusCode.Ok) {
+    if (response?.status === HttpStatusCode.Ok) {
       dispatch(registerSuccess())
       router.navigate('/login');
     }
@@ -82,7 +82,7 @@ export const register = (data) => async dispatch => {
     }
   }
   catch (error) {
-    if (error?.response?.status == 400) {
+    if (error?.response?.status === 400) {
       enqueueSnackbar(`${error?.response?.data?.message}`, { variant: "error" });
     }
     else {

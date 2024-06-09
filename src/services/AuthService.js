@@ -8,14 +8,17 @@ import { API_URL } from '../config';
 const baseUrl = `${API_URL}/Auth`;
 
 const AuthService = {
-  login: function(email, password) {
-    return axios.get(baseUrl + '/login', { params: { email, password }});
+  login: function(tz, password) {
+    return axios.get(baseUrl + '/login', { params: { tz, password }});
   },
   register: function(data) {
     return axios.post(baseUrl + '/register', { ...data });
   },
   getUser: function() {
     return axios.get(baseUrl + '/user', { headers: this.authHeader() });
+  },
+  addUser:function(){
+    return axios.post(baseUrl + '/add-user',{})
   },
   logout: function () {
     localStorage.removeItem('token');

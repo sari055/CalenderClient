@@ -10,7 +10,9 @@ import Calendar from './views/calendar/calendar';
 import ForgotPasswordForm from './views/sign-in/forgot-password-form';
 import AddUser from './views/family-settings/add-user';
 import AddEvent from './views/family-settings/add-event';
+import CalendarManage from './views/calendar/calendar-manage';
 const router = createBrowserRouter([
+
   {
     path:'/add-event',
     element:<AddEvent/>
@@ -48,8 +50,12 @@ const router = createBrowserRouter([
         element: <FamilySettings />
       },
       {
-        path: "about",
+        path: 'about',
         element: <About />
+      },
+      {
+        path:'calendar-manage',
+        element:<CalendarManage/>
       }
     ]
   },
