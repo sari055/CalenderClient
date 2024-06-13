@@ -24,7 +24,6 @@ import TextField from '@mui/material/TextField';
 import Form from "../../components/form";
 import { Button } from "@mui/material";
 import EditDetails from "../edit-details/edit-details";
-
 // import StyledHeader from "../../components/header";
 
 // const Item = styled(Paper)(({ theme }) => ({
