@@ -23,6 +23,7 @@ import AddParent from './add-user'
 import TextField from '@mui/material/TextField';
 import Form from "../../components/form";
 import { Button } from "@mui/material";
+import EditDetails from "../edit-details/edit-details";
 // import StyledHeader from "../../components/header";
 
 // const Item = styled(Paper)(({ theme }) => ({
@@ -94,11 +95,11 @@ const UserView = ({ user, users }) => {
                     <Typography variant="body1" gutterBottom>אב: {father.firstName} {father.lastName}</Typography>
                     <Typography variant="body1" gutterBottom>אם: {mother.firstName} {mother.lastName}</Typography>
                     <Typography variant="body1" gutterBottom>בן זוג: {spouse.firstName} {spouse.lastName}</Typography>
-
+                    <EditDetails />
                     <Divider>
                         <Chip label="פרטי יצירת קשר" size="small" />
                     </Divider>
-
+                    
                     <Grid container alignItems="center" spacing={3} sx={{ justifyContent: 'center', padding: 4 }}>
                         <Grid item xs={6}>
                             <Grid container alignItems="center" spacing={1}>
