@@ -46,8 +46,13 @@ export const getCurrentUserByTz = (userTz) => async dispatch => {
 
 export const editDetails = (userDetails) => async dispatch => {
     try {
-        await UserService.setEditDetails(userDetails);
-        dispatch(getCurrentUser(userDetails?.Tz));
+        const response = await UserService.setEditDetails(userDetails);
+        if (response?.status == 200) {
+            const variant = "success"
+            enqueueSnackbar('הפרטים נשמרו בהצלחה!', { variant });
+            dispatch(getCurrentUser(response?.data));
+        }
+        
 
     }
     catch (error) {
