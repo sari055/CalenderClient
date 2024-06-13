@@ -18,6 +18,11 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Header from "../../components/header";
+import { useNavigate, Link as RouterLink, Link } from 'react-router-dom';
+import AddParent from './add-user'
+import TextField from '@mui/material/TextField';
+import Form from "../../components/form";
+import { Button } from "@mui/material";
 import EditDetails from "../edit-details/edit-details";
 
 // import StyledHeader from "../../components/header";
