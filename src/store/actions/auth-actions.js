@@ -76,7 +76,7 @@ export const register = (data) => async dispatch => {
   try {
     debugger;
     const response = await AuthService.register(data);
-    if (response?.status == HttpStatusCode.Ok) {
+    if (response?.status === HttpStatusCode.Ok) {
       dispatch(registerSuccess())
       router.navigate('/login');
     }
@@ -85,7 +85,7 @@ export const register = (data) => async dispatch => {
     }
   }
   catch (error) {
-    if (error?.response?.status == 400) {
+    if (error?.response?.status === 400) {
       enqueueSnackbar(`${error?.response?.data?.message}`, { variant: "error" });
     }
     else {

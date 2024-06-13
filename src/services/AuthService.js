@@ -17,6 +17,9 @@ const AuthService = {
   getUser: function() {
     return axios.get(baseUrl + '/user', { headers: this.authHeader() });
   },
+  addUser:function(){
+    return axios.post(baseUrl + '/add-user',{})
+  },
   logout: function () {
     localStorage.removeItem('token');
   },
