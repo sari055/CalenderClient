@@ -78,7 +78,14 @@ export const register = (data) => async dispatch => {
     const response = await AuthService.register(data);
     if (response?.status === HttpStatusCode.Ok) {
       dispatch(registerSuccess())
-      router.navigate('/login');
+      if(data?.isAdmin){
+        router.navigate('/login');
+      } else {
+        const variant = "success"
+        enqueueSnackbar('הוספת בן משפחה בהצלחה', { variant });
+        router.navigate('/home/family/settings');
+      }
+     
     }
     else {
       enqueueSnackbar(`error: ${response.message}`, { variant: "error" });

@@ -15,19 +15,18 @@ import { enqueueSnackbar } from 'notistack';
 const Register = ({ isRegister = true, title = "הרשמה", submitAction }) => {
 
   const dispatch = useDispatch();
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target)
     const data = Object.fromEntries(formData.entries())
-
+    const userData = { ...data, isAdmin: true }
     if (!isRegister) {
-      submitAction(data);
+      submitAction(userData);
     }
 
     try {
-      dispatch(register(data));
+      dispatch(register(userData));
     }
     catch (error) {
       enqueueSnackbar(error)

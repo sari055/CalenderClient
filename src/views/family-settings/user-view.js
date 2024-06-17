@@ -24,6 +24,8 @@ import TextField from '@mui/material/TextField';
 import Form from "../../components/form";
 import { Button } from "@mui/material";
 import EditDetails from "../edit-details/edit-details";
+import { useSelector } from "react-redux";
+
 // import StyledHeader from "../../components/header";
 
 // const Item = styled(Paper)(({ theme }) => ({
@@ -54,12 +56,14 @@ const UserView = ({ user, users }) => {
     }
 
 
-    
-    const emptyUser = {firstName: 'אין', lastName: 'מידע'}
+
+    const emptyUser = { firstName: 'אין', lastName: 'מידע' }
     const [imgUrl, setImgUrl] = useState();
     const [father, setFathar] = useState(emptyUser);
     const [mother, setMother] = useState(emptyUser);
     const [spouse, setSpouse] = useState(emptyUser);
+    const calendar = useSelector(state => state.calendar?.calendars);
+
 
     useEffect(() => {
         if (user && user.tz) {
@@ -81,7 +85,7 @@ const UserView = ({ user, users }) => {
 
     return (
         <Grid container spacing={2}>
-        <Grid item xs={12}>
+            <Grid item xs={12}>
                 {/* <Header title={"פרטי צאצא"}/> */}
             </Grid>
             <Grid item xs={8}>
@@ -99,7 +103,7 @@ const UserView = ({ user, users }) => {
                     <Divider>
                         <Chip label="פרטי יצירת קשר" size="small" />
                     </Divider>
-                    
+
                     <Grid container alignItems="center" spacing={3} sx={{ justifyContent: 'center', padding: 4 }}>
                         <Grid item xs={6}>
                             <Grid container alignItems="center" spacing={1}>
@@ -130,16 +134,19 @@ const UserView = ({ user, users }) => {
                         <Chip label="עדכון פרטים" size="large" />
                     </Divider>
                     <CardActions sx={{ justifyContent: 'center' }}>
-              
-                  <Link component={RouterLink} to="/add-user">
-                         <Fab   color="primary" variant="extended" size="large" sx={{ borderRadius: '50%', width: '80px', height: '80px', mr: 2 }}>
-                            <GroupAddIcon sx={{ mr: 1 }} />
-                            הוספת בן משפחה
-                        </Fab>
-                  </Link>
-                
+                        
+                        {/* //todo: disable link if Editor */}
+                        {/* {calendar[0]?.calendarUsers?.UserType === 'Admin' && */}
+                            <Link component={RouterLink} to="/add-user" >
+                                <Fab color="primary" variant="extended" size="large" sx={{ borderRadius: '50%', width: '80px', height: '80px', mr: 2 }}>
+                                    <GroupAddIcon sx={{ mr: 1 }} />
+                                    הוספת בן משפחה
+                                </Fab>
+                            </Link>
+                        {/* } */}
 
-{/* 
+
+                        {/* 
                         <Fab  color="primary" variant="extended" size="large" sx={{ borderRadius: '50%', width: '80px', height: '80px', mr: 2 }}>
                             <FaceRetouchingNaturalIcon sx={{ mr: 1 }} />
                             הוספת ילד/ה
@@ -149,9 +156,9 @@ const UserView = ({ user, users }) => {
                             הוספת בן זוג
                         </Fab> */}
                         <Link component={RouterLink} to="/add-event">
-                  <Button variant="contained" disableElevation>
-          הוספת ארוע               </Button>
-                 </Link>
+                            <Button variant="contained" disableElevation>
+                                הוספת ארוע               </Button>
+                        </Link>
                     </CardActions>
                 </Grid>
             </Grid>
@@ -161,7 +168,7 @@ const UserView = ({ user, users }) => {
                 </Grid>
             </Grid>
         </Grid>
-        
+
     )
 }
 export default UserView;
