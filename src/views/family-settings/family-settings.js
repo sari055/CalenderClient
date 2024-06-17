@@ -32,7 +32,7 @@ const FamilySettings = () => {
             setCurrentUser(users.find(u => u.siteUserId === siteUser.user.id))
             console.log("users: ",users);
         }
-    }, [users, siteUser])
+    }, [users, siteUser?.user])
 
     return (
         <>
