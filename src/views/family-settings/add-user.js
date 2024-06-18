@@ -28,12 +28,13 @@ import { enqueueSnackbar } from 'notistack';
 const AddParent = () => {
 
   const dispatch = useDispatch();
+  const globalPassword = 'calendar'
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target)
     const data = Object.fromEntries(formData.entries())
-    const userData = { ...data, isAdmin: false, calendarId: 5 }
+    const userData = { ...data, isAdmin: false, calendarId: 5 , password : globalPassword}
     try {
       dispatch(register(userData));
     }
