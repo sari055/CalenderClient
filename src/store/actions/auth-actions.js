@@ -83,7 +83,7 @@ export const register = (data) => async dispatch => {
       } else {
         const variant = "success"
         enqueueSnackbar('הוספת בן משפחה בהצלחה', { variant });
-        router.navigate('/home/family/settings');
+        // router.navigate('/home/family/settings');
       }
      
     }
