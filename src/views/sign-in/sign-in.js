@@ -3,22 +3,22 @@ import loginImage from '../../assets/desk-calendar-with-texts-english.jpg';
 import Login from "./login";
 import { Grid } from "@mui/material";
 
-const SignIn = ({children}) => {
+const SignIn = ({ children, isRegister = true }) => {
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
       <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: `url("${loginImage}")`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        {children}
+        item
+        xs={false}
+        sm={4}
+        md={isRegister ? 7 : 1}
+        sx={{
+          backgroundImage: isRegister ? `url("${loginImage}")` : null,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      {children}
     </Grid>
   )
 }
