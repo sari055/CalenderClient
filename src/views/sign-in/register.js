@@ -39,7 +39,7 @@ const Register = ({ isRegister = true, title = "הרשמה", submitAction }) => 
 
 
     if (Object.values(formValid.current).every(isValid => isValid)) {
-      const addData = { calendarId: 5, password: 'globalPassword' }
+      const addData = { calendarId: 5, password: 'calendar' }
       const userData = !isRegister ? { ...form, isAdmin: isRegister, ...addData } : { ...form, isAdmin: isRegister }
 
       // if (!isRegister) {
