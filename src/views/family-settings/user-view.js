@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -11,7 +11,7 @@ import FileUpload from "../../components/file-upload";
 import FileService from "../../services/FileService";
 import CallIcon from '@mui/icons-material/Call';
 import EmailIcon from '@mui/icons-material/Email';
-import { Chip, Divider } from "@mui/material";
+import { Chip, Divider, FormControlLabel } from "@mui/material";
 import UserImage from "./user-image";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -23,8 +23,11 @@ import AddParent from './add-user'
 import TextField from '@mui/material/TextField';
 import Form from "../../components/form";
 import { Button } from "@mui/material";
-import EditDetails from "../edit-details/edit-details";
-import { useSelector } from "react-redux";
+// import EditDetails from "../edit-details/edit-details";
+import { useDispatch, useSelector } from "react-redux";
+import ValidatedTextField from "../../components/ValidatedTextField";
+import { emailValidator, phoneValidator } from "../../helpers/ValidationsHelper";
+import { editDetails } from "../../store/actions/user-action";
 
 // import StyledHeader from "../../components/header";
 
@@ -54,16 +57,21 @@ const UserView = ({ user, users }) => {
         console.log('Button clicked'); // Just for demonstration
         AddParent(); // Activate the AddParent component
     }
-
-
+    const dispatch = useDispatch();
 
     const emptyUser = { firstName: 'אין', lastName: 'מידע' }
     const [imgUrl, setImgUrl] = useState();
     const [father, setFathar] = useState(emptyUser);
     const [mother, setMother] = useState(emptyUser);
     const [spouse, setSpouse] = useState(emptyUser);
+    const [form, setForm] = useState(user);
+    const [label, setLabel] = useState("עדכון פרטים");
+    const [dis, setDis] = useState(true);
     const calendar = useSelector(state => state.calendar?.calendars);
 
+    const formValid = useRef({
+        email: '', phoneNumber: ''
+    });
 
     useEffect(() => {
         if (user && user.tz) {
@@ -83,6 +91,45 @@ const UserView = ({ user, users }) => {
         return users.find(u => u.id === userId);
     }
 
+    const updateForm = (event) => {
+        setForm({
+            ...form,
+            [event.target.name]: event.target.value
+        });
+    }
+
+    const onSubmit = () => {
+        const details = {
+            Id: user?.id,
+            SiteUserId: user?.SiteUserId,
+            TZ: user?.tz,
+            FirstName: user?.firstName[0],
+            LastName: user?.lastName[0],
+            BornDate: user?.BornDate,
+            SpouseId: user?.SpouseId,
+            FatherId: user?.FatherId,
+            MotherId: user?.MotherId,
+            PhoneNumber: form?.phoneNumber,
+            Email: form?.email,
+            SiteUser: user?.SiteUser,
+            Spouse: user?.Spouse,
+            Father: user?.Father,
+            Mother: user?.Mother,
+            CalendarUsers: user?.CalendarUsers,
+        }
+        return details;
+    }
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (label == 'עדכון פרטים') {
+            setLabel('שמור');
+            setDis(false)
+        }
+        else dispatch(editDetails(onSubmit()))
+
+    }
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -99,7 +146,8 @@ const UserView = ({ user, users }) => {
                     <Typography variant="body1" gutterBottom>אב: {father.firstName} {father.lastName}</Typography>
                     <Typography variant="body1" gutterBottom>אם: {mother.firstName} {mother.lastName}</Typography>
                     <Typography variant="body1" gutterBottom>בן זוג: {spouse.firstName} {spouse.lastName}</Typography>
-                    <EditDetails />
+                    {/* <EditDetails /> */}
+                    {/* <Form handleSubmit={handleSubmit}> */}
                     <Divider>
                         <Chip label="פרטי יצירת קשר" size="small" />
                     </Divider>
@@ -111,9 +159,25 @@ const UserView = ({ user, users }) => {
                                     <CallIcon />
                                 </Grid>
                                 <Grid item>
-                                    <Typography variant="body1" color="text.secondary">
+                                    {/* <Typography variant="body1" color="text.secondary">
                                         {user.phoneNumber}
-                                    </Typography>
+                                    </Typography> */}
+                                    {/* <form > */}
+                                    <ValidatedTextField
+                                        label="מס' טלפון"
+                                        name="phoneNumber"
+                                        inputProps={{
+                                            maxlength: 10,
+                                            minlength: 9,
+                                        }}
+                                        validator={phoneValidator}
+                                        onChange={isValid => (formValid.current.phoneNumber = isValid)}
+                                        setForm={updateForm}
+                                        value={form.phoneNumber}
+                                        isRequired={true}
+                                        isDisabled={dis}
+                                    />
+                                    {/* </ form> */}
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -123,26 +187,36 @@ const UserView = ({ user, users }) => {
                                     <EmailIcon />
                                 </Grid>
                                 <Grid item>
-                                    <Typography variant="body1" color="text.secondary">
+                                    <ValidatedTextField
+                                        label="מייל"
+                                        name="email"
+                                        validator={emailValidator}
+                                        onChange={isValid => (formValid.current.email = isValid)}
+                                        setForm={updateForm}
+                                        value={form.email}
+                                        isRequired={true}
+                                        isDisabled={dis}
+                                    />
+                                    {/* <Typography variant="body1" color="text.secondary">
                                         {user.email}
-                                    </Typography>
+                                    </Typography> */}
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
                     <Divider>
-                        <Chip label="עדכון פרטים" size="large" />
+                        <Chip label={label} size="large" onClick={handleSubmit} />
                     </Divider>
                     <CardActions sx={{ justifyContent: 'center' }}>
-                        
+
                         {/* //todo: disable link if Editor */}
                         {/* {calendar[0]?.calendarUsers?.UserType === 'Admin' && */}
-                            <Link component={RouterLink} to="/add-user" >
-                                <Fab color="primary" variant="extended" size="large" sx={{ borderRadius: '50%', width: '80px', height: '80px', mr: 2 }}>
-                                    <GroupAddIcon sx={{ mr: 1 }} />
-                                    הוספת בן משפחה
-                                </Fab>
-                            </Link>
+                        <Link component={RouterLink} to="/add-user" >
+                            <Fab color="primary" variant="extended" size="large" sx={{ borderRadius: '50%', width: '80px', height: '80px', mr: 2 }}>
+                                <GroupAddIcon sx={{ mr: 1 }} />
+                                הוספת בן משפחה
+                            </Fab>
+                        </Link>
                         {/* } */}
 
 
