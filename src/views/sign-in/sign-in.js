@@ -1,5 +1,6 @@
 import React from "react";
 import loginImage from '../../assets/desk-calendar-with-texts-english.jpg';
+import addUser from '../../assets/6274.jpg';
 import Login from "./login";
 import { Grid } from "@mui/material";
 
@@ -10,9 +11,9 @@ const SignIn = ({ children, isRegister = true }) => {
         item
         xs={false}
         sm={4}
-        md={isRegister ? 7 : 1}
+        md={7}
         sx={{
-          backgroundImage: isRegister ? `url("${loginImage}")` : null,
+          backgroundImage: isRegister ? `url("${loginImage}")` : `url("${addUser}")`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
