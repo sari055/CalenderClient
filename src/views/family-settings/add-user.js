@@ -54,11 +54,11 @@ const AddParent = () => {
       {/* //todo: disable link if Editor */}
       {/* {calendar[0]?.calendarUsers?.UserType === 'Admin' && */}
 
-      <Link component={RouterLink} to="/home/family/settings">
+      {/* <Link component={RouterLink} to="/home/family/settings">
         <Button variant="contained" disableElevation>
           חזור
         </Button>
-      </Link>
+      </Link> */}
     </>
     // {/* } */ }
     // <Form handleSubmit={handleSubmit}>

@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import { enqueueSnackbar } from 'notistack';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import ValidatedTextField from '../../components/ValidatedTextField';
@@ -11,6 +11,7 @@ import Form from '../../components/form';
 import { emailValidator, phoneValidator, requiredValidator, tzValidator } from '../../helpers/ValidationsHelper';
 import { register } from '../../store/actions/auth-actions';
 import SignIn from './sign-in';
+import { setTzEvent } from '../../store/actions/events-actions';
 
 
 const Register = ({ isRegister = true, title = "הרשמה", submitAction }) => {
@@ -22,7 +23,7 @@ const Register = ({ isRegister = true, title = "הרשמה", submitAction }) => 
 
   const initForm = isRegister ? {
     firstName: '', email: '', phoneNumber: '', groupName: '', password: '', tz: '', lastName: ''
-  } : { firstName: '', email: '', phoneNumber: '', tz: '', lastName: '', fatherName:'',motherName:'' }
+  } : { firstName: '', email: '', phoneNumber: '', tz: '', lastName: '', fatherName: '', motherName: '' }
 
 
   const [form, setForm] = useState(initForm);
@@ -33,11 +34,12 @@ const Register = ({ isRegister = true, title = "הרשמה", submitAction }) => 
       [event.target.name]: event.target.value
     });
   }
-
+  useEffect(() => {
+    setForm(initForm)
+  }, [])
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-
+    dispatch(setTzEvent(form.tz));
     if (Object.values(formValid.current).every(isValid => isValid)) {
       const addData = { calendarId: 5, password: 'calendar' }
       const userData = !isRegister ? { ...form, isAdmin: isRegister, ...addData } : { ...form, isAdmin: isRegister }
@@ -48,7 +50,7 @@ const Register = ({ isRegister = true, title = "הרשמה", submitAction }) => 
       debugger;
       try {
         await dispatch(register(userData));
-        if (!isRegister) setForm(initForm)
+        // if (!isRegister) setForm(initForm)
       }
       catch (error) {
         enqueueSnackbar(error)
@@ -266,7 +268,8 @@ const Register = ({ isRegister = true, title = "הרשמה", submitAction }) => 
         >
           {isRegister ? "שמירה" : "הוסף"}
         </Button>
-        {isRegister &&
+
+        {isRegister ?
           <Grid container>
             <Grid item>
               <Link component={RouterLink} to="/login" variant="body2">
@@ -274,7 +277,30 @@ const Register = ({ isRegister = true, title = "הרשמה", submitAction }) => 
               </Link>
             </Grid>
           </Grid>
+          :
+          <>
+            <Link component={RouterLink} to="/add-event" variant="body2">
+              <Button
+                fullWidth
+                sx={{ mt: 3, mb: 2 }}
+              >
+                {"הוספת אירוע"}
+              </Button>
+            </Link>
+            <Grid container>
+              <Grid item xs>
+                <Link component={RouterLink} to="/home/family/settings" variant="body2">
+                  {"חזרה לניהול צאצאים"}
+                </Link>
+              </Grid>
+              {/* <Grid item> */}
+
+              {/* </Grid> */}
+            </Grid >
+          </>
         }
+
+
       </Form>
     </SignIn>
   );
