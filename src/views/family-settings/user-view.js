@@ -64,10 +64,11 @@ const UserView = ({ user, users }) => {
     const [father, setFathar] = useState(emptyUser);
     const [mother, setMother] = useState(emptyUser);
     const [spouse, setSpouse] = useState(emptyUser);
-    const [form, setForm] = useState(user);
     const [label, setLabel] = useState("עדכון פרטים");
     const [dis, setDis] = useState(true);
     const calendar = useSelector(state => state.calendar?.calendars);
+    const currentDetailsUser = useSelector(state => state.user);
+    const [form, setForm] = useState(currentDetailsUser?.currentUser);
 
     const formValid = useRef({
         email: '', phoneNumber: ''
@@ -92,6 +93,7 @@ const UserView = ({ user, users }) => {
     }
 
     const updateForm = (event) => {
+        console.log(form)
         setForm({
             ...form,
             [event.target.name]: event.target.value
@@ -100,28 +102,29 @@ const UserView = ({ user, users }) => {
 
     const onSubmit = () => {
         const details = {
-            Id: user?.id,
-            SiteUserId: user?.SiteUserId,
-            TZ: user?.tz,
-            FirstName: user?.firstName[0],
-            LastName: user?.lastName[0],
-            BornDate: user?.BornDate,
-            SpouseId: user?.SpouseId,
-            FatherId: user?.FatherId,
-            MotherId: user?.MotherId,
+            Id: form?.id,
+            SiteUserId: form?.siteUserId,
+            TZ: form?.tz,
+            FirstName: form?.firstName[0],
+            LastName: form?.lastName[0],
+            BornDate: form?.bornDate,
+            SpouseId: form?.spouseId,
+            FatherId: form?.fatherId,
+            MotherId: form?.motherId,
             PhoneNumber: form?.phoneNumber,
             Email: form?.email,
-            SiteUser: user?.SiteUser,
-            Spouse: user?.Spouse,
-            Father: user?.Father,
-            Mother: user?.Mother,
-            CalendarUsers: user?.CalendarUsers,
+            SiteUser: form?.siteUser,
+            Spouse: form?.spouse,
+            Father: form?.father,
+            Mother: form?.mother,
+            CalendarUsers: form?.calendarUsers,
         }
         return details;
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        debugger;
         if (label == 'עדכון פרטים') {
             setLabel('שמור');
             setDis(false)
